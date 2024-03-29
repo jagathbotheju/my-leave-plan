@@ -4,6 +4,7 @@ import { getUsers } from "@/actions/userActions";
 import LeaveTimeLine from "@/components/LeaveTimeline";
 import { UserExt } from "@/lib/types";
 import { authOptions } from "@/lib/authOptions";
+import moment from "moment";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -18,6 +19,8 @@ export default async function Home() {
           Please go to Profile and set your Leave Balance, for this year
         </h2>
       )}
+
+      <h1 className="font-bold text-3xl">{moment().year()}</h1>
       <div className="mt-10">
         <LeaveTimeLine users={users} />
       </div>
