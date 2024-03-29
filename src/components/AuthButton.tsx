@@ -21,7 +21,7 @@ const AuthButton = () => {
   const user = session?.user as UserExt;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4">
       {user ? (
         <>
           <Link

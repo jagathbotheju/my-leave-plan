@@ -10,7 +10,7 @@ const Navbar = () => {
         <Link href="/" className="text-3xl font-semibold">
           My Leave Plan
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <AuthButton />
           <ThemeSwitcher />
         </div>
