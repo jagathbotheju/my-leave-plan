@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 const LeaveRequestPage = async ({ params }: Props) => {
   const response = await getUserById(params.userid);
   const user = response.user as UserExt;
-  console.log("LeaveRequestPage", user.leaveBalance);
 
   if (!user) {
     redirect("/auth/login");

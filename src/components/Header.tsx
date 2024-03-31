@@ -11,10 +11,6 @@ interface Props {
 }
 
 const Header = ({ title, className, user, showSummary = false }: Props) => {
-  // const { data: session } = useSession();
-  // const user = session?.user as UserExt;
-  // console.log(user);
-
   return (
     <div className={cn("w-full p-4 my-2", className)}>
       <div className="container mx-auto max-w-7xl flex items-center justify-between">

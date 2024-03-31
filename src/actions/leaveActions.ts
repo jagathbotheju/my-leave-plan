@@ -290,7 +290,6 @@ export const setLeaveBalance = async ({
   isEditMode: boolean;
 }) => {
   const currentUser = await getCurrentUser();
-  console.log("server", currentUser);
   if (currentUser.id !== userid) {
     return {
       success: false,
