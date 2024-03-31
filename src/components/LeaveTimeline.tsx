@@ -102,7 +102,7 @@ const LeaveTimeLine = ({ users }: Props) => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex w-full h-[700px] gap-1">
+      <div className="flex w-full h-full gap-1">
         {/* user names */}
         <div className="flex flex-col w-[10%] gap-4 mt-[48px]">
           {users.map((user) => (
