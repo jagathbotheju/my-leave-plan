@@ -43,7 +43,7 @@ const ProfilePage = async ({ params }: Props) => {
         </div>
 
         <div className="flex flex-col gap-5">
-          <ProfileEditForm />
+          {/* <ProfileEditForm /> */}
           {!_.isEmpty(user?.leaveBalance) && <LeaveSummary user={user} />}
         </div>
       </div>

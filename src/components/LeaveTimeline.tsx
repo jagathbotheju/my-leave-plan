@@ -96,7 +96,7 @@ const LeaveTimeLine = ({ users }: Props) => {
     const timeLine = document.getElementById(`${scrollTo}`);
     timeLine?.scrollIntoView({
       behavior: "smooth",
-      inline: "end",
+      inline: "start",
     });
   }, []);
 
