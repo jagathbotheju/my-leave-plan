@@ -35,7 +35,7 @@ const AuthButton = () => {
             <Button
               className="text-sky-300 hover:text-sky-400 transition-colors"
               size="sm"
-              onClick={() => router.push(`/admin/${user.id}`)}
+              onClick={() => router.push(`/admin`)}
             >
               ADMIN
             </Button>
@@ -90,7 +90,7 @@ const AuthButton = () => {
               {user.role === "ADMIN" && (
                 <DropdownMenuItem
                   className="cursor-pointer hover:font-semibold"
-                  onClick={() => router.push(`/admin/${user.id}`)}
+                  onClick={() => router.push(`/admin`)}
                 >
                   ADMIN
                 </DropdownMenuItem>

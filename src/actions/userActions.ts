@@ -23,7 +23,7 @@ export const deleteUser = async (userId: string) => {
     if (currentUser.id !== userId && currentUser.role !== "ADMIN") {
       return {
         success: false,
-        error: "Not Authorized to update this leave, please contact ADMIN",
+        error: "Not Authorized to delete this leave, please contact ADMIN",
       };
     }
 
@@ -34,6 +34,7 @@ export const deleteUser = async (userId: string) => {
     });
 
     if (deletedUser) {
+      revalidatePath(`/admin`);
       return {
         success: true,
         message: "User Deleted Successfully",

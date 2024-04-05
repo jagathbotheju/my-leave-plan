@@ -21,7 +21,7 @@ const Header = ({ title, className, user, showSummary = false }: Props) => {
         {user && showSummary && (
           <div className="flex gap-4">
             {/* annual */}
-            <div className="flex flex-col items-center px-5 py-4 bg-rose-300 rounded-md">
+            <div className="flex flex-col items-center px-5 py-4 bg-yellow-200 rounded-md">
               <p className="font-semibold dark:text-slate-700">ANNUAL</p>
               <p className="font-bold text-lg text-primary">
                 {user && user.leaveBalance && user.leaveBalance.annual}
@@ -29,7 +29,7 @@ const Header = ({ title, className, user, showSummary = false }: Props) => {
             </div>
 
             {/* casual */}
-            <div className="flex flex-col items-center px-5 py-4 bg-rose-300 rounded-md">
+            <div className="flex flex-col items-center px-5 py-4 bg-orange-200 rounded-md">
               <p className="font-semibold dark:text-slate-700">CASUAL</p>
               <p className="font-bold text-lg text-primary">
                 {user && user.leaveBalance && user.leaveBalance.casual}

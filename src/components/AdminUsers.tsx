@@ -5,6 +5,17 @@ import { useTransition } from "react";
 import { deleteUser } from "@/actions/userActions";
 import { toast } from "sonner";
 import { UserExt } from "@/lib/types";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 interface Props {
   users: UserExt[];
@@ -30,7 +41,7 @@ const AdminUsers = ({ users }: Props) => {
             className="flex p-5 bg-slate-100 dark:bg-slate-700 rounded-md shadow-md justify-between"
           >
             <p>{user.name}</p>
-            <Trash2
+            {/* <Trash2
               className="w-5 h-5 text-red-500 cursor-pointer"
               onClick={() => {
                 startTransition(() => {
@@ -47,7 +58,48 @@ const AdminUsers = ({ users }: Props) => {
                     });
                 });
               }}
-            />
+            /> */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Trash2 className="h-5 w-5 text-red-500 cursor-pointer" />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <div className="flex flex-col">
+                      <p>This action cannot be undone.</p>
+                      <p className="text-red-500 font-semibold">{`This will permanently delete user ${user.name?.toUpperCase()}`}</p>
+                    </div>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      startTransition(() => {
+                        deleteUser(user.id)
+                          .then((res) => {
+                            if (res.success) {
+                              return toast.success(res.message);
+                            } else {
+                              return toast.error(res.message);
+                            }
+                          })
+                          .catch((err) => {
+                            return toast.error("Internal Server Error");
+                          });
+                      });
+                    }}
+                    className="focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0"
+                  >
+                    DELETE
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         ))}
       </div>

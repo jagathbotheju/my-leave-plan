@@ -22,27 +22,14 @@ interface Props {
 }
 
 const AdminPage = async ({ params }: Props) => {
-  const response = await getUserById(params.id);
-  const user = response.user as UserExt;
+  //const response = await getUserById(params.id);
+  //const user = response.user as UserExt;
   const session = await getServerSession(authOptions);
   const currentUser = session?.user as UserExt;
 
-  const leaveHistoryData = user?.leave.map((leave: Leave) => ({
-    leaveId: leave.id,
-    year: leave.year,
-    appliedOn: leave.updatedAt,
-    startDate: leave.startDate,
-    endDate: leave.endDate,
-    days: leave.days,
-    leaveType: leave.leaveType,
-    leaveStatus: leave.leaveStatus,
-    userId: user.id,
-    leaveBalance: user.leaveBalance,
-  }));
-
   if (!session || !session.user) redirect("/login");
-  if (currentUser.id !== user.id) redirect("/");
-  if (user.role !== "ADMIN") {
+  // if (currentUser.id !== user.id) redirect("/");
+  if (currentUser.role !== "ADMIN") {
     return redirect("/auth/not-authorized");
   }
 

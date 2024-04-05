@@ -41,12 +41,13 @@ export const authOptions: AuthOptions = {
           },
         });
 
-        if (!user || !user.hashedPassword)
-          throw new Error("Invalid Credentials");
-
         if (!user?.emailVerified) {
           throw new Error("Please check your Email to Activate Account");
         }
+
+        if (!user || !user.hashedPassword)
+          throw new Error("Invalid Credentials");
+
         //check password
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password,

@@ -12,6 +12,14 @@ export default async function Home() {
   const res = await getUsers();
   const users = res.data as UserExt[];
 
+  if (_.isEmpty(users)) {
+    return (
+      <div className="flex flex-col mt-10 mx-auto px-20">
+        <h1 className="text-3xl font-bold text-red-200 p-10">Still No Users</h1>
+      </div>
+    );
+  }
+
   return (
     <main className="flex flex-col mt-10 mx-auto px-20">
       {session && user && _.isEmpty(user.leaveBalance) && (

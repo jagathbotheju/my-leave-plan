@@ -129,14 +129,14 @@ const LoginForm = ({ callbackUrl }: Props) => {
           forgot password?
         </Link>
 
-        <div className="flex items-center gap-x-5 my-3">
+        {/* <div className="flex items-center gap-x-5 my-3">
           <div className="flex bg-slate-200 w-20 h-[0.5px]" />
           or
           <div className="flex bg-slate-200 w-20 h-[0.5px]" />
-        </div>
+        </div> */}
 
         {/* google login */}
-        <Button
+        {/* <Button
           type="button"
           className="w-full mb-3"
           variant="secondary"
@@ -152,9 +152,9 @@ const LoginForm = ({ callbackUrl }: Props) => {
             />
           </div>
           Google
-        </Button>
+        </Button> */}
 
-        <Link href="/auth/register" className="text-xs hover:text-primary">
+        <Link href="/auth/register" className="text-sm hover:text-primary mt-5">
           {"Don't have an Account? Create New"}
         </Link>
       </div>

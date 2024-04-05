@@ -4,10 +4,11 @@ import moment from "moment";
 import useDraggableScroll from "use-draggable-scroll";
 import { useEffect, useRef } from "react";
 import DateChip from "./DateChip";
-import { LeaveStatus } from "@prisma/client";
+import { LeaveStatus, LeaveType } from "@prisma/client";
 import MonthLabel from "./MonthLabel";
 import { UserExt } from "@/lib/types";
 import { END_DATE, START_DATE } from "@/lib/constants";
+import { date } from "zod";
 
 interface Props {
   users: UserExt[];
@@ -52,13 +53,15 @@ const LeaveTimeLine = ({ users }: Props) => {
   };
 
   const getUserLeaves = (user: UserExt) => {
-    const userLeaves: { date: string; status: LeaveStatus }[] = [];
+    const userLeaves: { date: string; status: LeaveStatus; type: LeaveType }[] =
+      [];
     user.leave.map((item) => {
       const range = getDateRange(item.startDate, item.endDate);
       range.map((date) =>
         userLeaves.push({
           date: moment(date).format("YYYY-MM-DD"),
           status: item.leaveStatus,
+          type: item.leaveType,
         })
       );
     });
@@ -71,7 +74,7 @@ const LeaveTimeLine = ({ users }: Props) => {
       isOnLeave: boolean;
       status: LeaveStatus;
     }[],
-    userLeaves: { date: string; status: LeaveStatus }[]
+    userLeaves: { date: string; status: LeaveStatus; type: LeaveType }[]
   ) => {
     const userLeaveCalendar = calendar.map((calendarItem) => {
       const includes = userLeaves.find(
@@ -82,6 +85,7 @@ const LeaveTimeLine = ({ users }: Props) => {
           date: calendarItem.date,
           isOnLeave: true,
           status: includes.status,
+          type: includes.type,
         };
       }
       return calendarItem;
@@ -104,20 +108,26 @@ const LeaveTimeLine = ({ users }: Props) => {
     <div className="flex flex-col w-full">
       <div className="flex w-full h-full gap-1">
         {/* user names */}
-        <div className="flex flex-col w-[10%] gap-4 mt-[48px]">
-          {users.map((user) => (
-            <p
-              key={user.id}
-              className="p-2 h-10 text-end font-semibold rounded-md bg-slate-200 text-slate-800"
-            >
-              {user.name}
-            </p>
-          ))}
+        <div className="flex flex-col w-[10%] gap-4 mt-[48px] py-4">
+          {users.map((user) => {
+            const userName = user.name ? user.name.split(" ") : "";
+            const formatUserName =
+              userName &&
+              userName.filter((name) => !name.startsWith("MOH" || "MUH"));
+            return (
+              <p
+                key={user.id}
+                className="p-2 h-10 text-end font-semibold rounded-md bg-slate-200 text-slate-800 text-sm whitespace-nowrap text-ellipsis overflow-hidden"
+              >
+                {formatUserName[0]}
+              </p>
+            );
+          })}
         </div>
 
         {/* scrolling calendar view */}
         <div
-          className="flex flex-col w-full gap-1 overflow-x-hidden cursor-grab"
+          className="flex flex-col w-full gap-1 overflow-x-hidden cursor-grab py-4"
           ref={ref}
           id="time-line"
           onMouseDown={onMouseDown}
@@ -147,6 +157,53 @@ const LeaveTimeLine = ({ users }: Props) => {
               })}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* legend */}
+      <div className="flex gap-5 mt-5 self-end">
+        <div className="flex gap-2 items-center text-slate-500 dark:text-slate-200">
+          <DateChip
+            leaveInfo={{
+              date: moment(moment.now()).format("YYYY-MM-DD"),
+              isOnLeave: true,
+              status: LeaveStatus.PENDING,
+              type: LeaveType.CASUAL,
+            }}
+          />
+          <p className="text-xs">CASUAL PENDING</p>
+        </div>
+
+        <div className="flex gap-2 items-center text-slate-500 dark:text-slate-200">
+          <DateChip
+            leaveInfo={{
+              date: moment(moment.now()).format("YYYY-MM-DD"),
+              isOnLeave: true,
+              status: LeaveStatus.PENDING,
+              type: LeaveType.ANNUAL,
+            }}
+          />
+          <p className="text-xs">ANNUAL PENDING</p>
+        </div>
+
+        <div className="flex gap-2 items-center text-slate-500 dark:text-slate-200">
+          <DateChip
+            leaveInfo={{
+              date: moment(moment.now()).format("YYYY-MM-DD"),
+              isOnLeave: true,
+              status: LeaveStatus.APPROVED,
+              type: LeaveType.CASUAL,
+            }}
+          />
+          <DateChip
+            leaveInfo={{
+              date: moment(moment.now()).format("YYYY-MM-DD"),
+              isOnLeave: true,
+              status: LeaveStatus.APPROVED,
+              type: LeaveType.ANNUAL,
+            }}
+          />
+          <p className="text-xs">CONFIRMED</p>
         </div>
       </div>
     </div>
