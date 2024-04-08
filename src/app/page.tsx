@@ -7,12 +7,17 @@ import { authOptions } from "@/lib/authOptions";
 import moment from "moment";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
   const user = session?.user as UserExt;
   const res = await getUsers();
   const users = res.data as UserExt[];
+
+  // if (!session || !session.user) {
+  //   redirect("/login");
+  // }
 
   if (_.isEmpty(users)) {
     return (

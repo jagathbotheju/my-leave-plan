@@ -15,6 +15,7 @@ interface Props {
 }
 
 const LeaveTimeLine = ({ users }: Props) => {
+  console.log(users);
   const ref = useRef(null);
   const { onMouseDown } = useDraggableScroll(ref, { direction: "horizontal" });
 
