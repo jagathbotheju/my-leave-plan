@@ -5,11 +5,13 @@ import LeaveTimeLine from "@/components/LeaveTimeline";
 import { UserExt } from "@/lib/types";
 import { authOptions } from "@/lib/authOptions";
 import moment from "moment";
+import { Suspense } from "react";
+import Loading from "@/components/Loading";
 
 export default async function Home() {
-  const res = await getUsers();
   const session = await getServerSession(authOptions);
   const user = session?.user as UserExt;
+  const res = await getUsers();
   const users = res.data as UserExt[];
 
   if (_.isEmpty(users)) {
@@ -29,9 +31,12 @@ export default async function Home() {
       )}
 
       <h1 className="font-bold text-3xl">{moment().year()}</h1>
-      <div className="mt-10">
-        <LeaveTimeLine users={users} />
-      </div>
+
+      <Suspense fallback={<Loading />}>
+        <div className="mt-10">
+          <LeaveTimeLine users={users} />
+        </div>
+      </Suspense>
     </main>
   );
 }
