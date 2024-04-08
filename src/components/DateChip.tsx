@@ -16,6 +16,10 @@ const DateChip = ({ leaveInfo }: Props) => {
   const date = moment(leaveInfo.date).date();
   const month = moment(leaveInfo.date).month();
 
+  if (leaveInfo.isOnLeave) {
+    console.log("leave", month + 1, date);
+  }
+
   return (
     <div
       id={`${month + 1}-${date}`}
