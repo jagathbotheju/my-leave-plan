@@ -2,6 +2,7 @@ import { months } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { LeaveStatus, LeaveType } from "@prisma/client";
 import moment from "moment";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   leaveInfo: {
@@ -17,21 +18,24 @@ const DateChip = ({ leaveInfo }: Props) => {
   const month = moment(leaveInfo.date).month();
 
   if (leaveInfo.isOnLeave) {
-    console.log("leave", month + 1, date);
+    console.log("leave", month + 1, date, leaveInfo.type);
   }
 
   return (
     <div
-      id={`${month + 1}-${date}`}
+      id={uuidv4()}
       className={cn(
         `p-2 px-4 w-5 flex items-center justify-center h-10 text-xs text-slate-500 rounded-md border`,
         leaveInfo.isOnLeave && "text-slate-700 font-semibold",
         {
           // "bg-orange-300":
           //   leaveInfo.status === LeaveStatus.PENDING && leaveInfo.isOnLeave,
-          "bg-red-300": leaveInfo.status === LeaveStatus.REJECTED,
-          "bg-orange-200": leaveInfo.type === LeaveType.ANNUAL,
-          "bg-yellow-200": leaveInfo.type === LeaveType.CASUAL,
+          "bg-red-300":
+            leaveInfo.isOnLeave && leaveInfo.status === LeaveStatus.REJECTED,
+          "bg-orange-200":
+            leaveInfo.isOnLeave && leaveInfo.type === LeaveType.ANNUAL,
+          "bg-yellow-200":
+            leaveInfo.isOnLeave && leaveInfo.type === LeaveType.CASUAL,
           "text-blue-600 ring-1":
             leaveInfo.status === LeaveStatus.APPROVED && leaveInfo.isOnLeave,
         }
