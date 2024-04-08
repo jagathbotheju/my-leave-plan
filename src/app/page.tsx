@@ -7,9 +7,9 @@ import { authOptions } from "@/lib/authOptions";
 import moment from "moment";
 
 export default async function Home() {
+  const res = await getUsers();
   const session = await getServerSession(authOptions);
   const user = session?.user as UserExt;
-  const res = await getUsers();
   const users = res.data as UserExt[];
 
   if (_.isEmpty(users)) {
