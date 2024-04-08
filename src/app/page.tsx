@@ -15,9 +15,11 @@ export default async function Home() {
   const res = await getUsers();
   const users = res.data as UserExt[];
 
-  // if (!session || !session.user) {
-  //   redirect("/login");
-  // }
+  console.log("user", user);
+
+  if (!user) {
+    redirect("/auth/login");
+  }
 
   if (_.isEmpty(users)) {
     return (
