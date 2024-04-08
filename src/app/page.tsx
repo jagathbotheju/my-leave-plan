@@ -15,8 +15,6 @@ export default async function Home() {
   const res = await getUsers();
   const users = res.data as UserExt[];
 
-  console.log("user", user);
-
   if (!user) {
     redirect("/auth/login");
   }

@@ -37,8 +37,6 @@ const LoginForm = ({ callbackUrl }: Props) => {
     mode: "all",
   });
 
-  console.log("callback", callbackUrl);
-
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     const { email, password } = values;
     signIn("credentials", {

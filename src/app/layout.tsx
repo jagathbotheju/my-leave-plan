@@ -4,8 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
-import SessionProvider from "@/components/SessionProvider";
 import { getServerSession } from "next-auth";
+import SessionWrapper from "@/components/SessionWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  // const session = await getServerSession();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -33,10 +33,10 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SessionProvider session={session}>
+            <SessionWrapper>
               <Navbar />
               {children}
-            </SessionProvider>
+            </SessionWrapper>
           </ThemeProvider>
         </main>
         <Toaster richColors />
