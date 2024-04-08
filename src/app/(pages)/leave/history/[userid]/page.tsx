@@ -43,7 +43,7 @@ const LeaveHistoryPage = async ({ params }: Props) => {
   if (!session || !session.user) {
     redirect("/login");
   }
-  if (currentUser.id !== user.id) redirect("/");
+  // if (currentUser.id !== user.id) redirect("/");
 
   return (
     <div className="flex w-full flex-col">
