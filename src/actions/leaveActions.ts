@@ -305,7 +305,10 @@ export const setLeaveBalance = async ({
           userId: userid,
         },
         data: {
-          ...balance,
+          year: balance.year,
+          annual: balance.annual,
+          annualForward: balance.annualForward,
+          sick: balance.sick,
         },
       });
     } else {
@@ -336,6 +339,7 @@ export const setLeaveBalance = async ({
       error: "Could not set leave balance, try later",
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       error: "Internal Server Error",

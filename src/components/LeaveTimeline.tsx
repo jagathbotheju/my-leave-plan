@@ -2,7 +2,7 @@
 import _ from "lodash";
 import moment from "moment";
 import useDraggableScroll from "use-draggable-scroll";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import DateChip from "./DateChip";
 import { LeaveStatus, LeaveType } from "@prisma/client";
 import MonthLabel from "./MonthLabel";
@@ -92,6 +92,33 @@ const LeaveTimeLine = ({ users }: Props) => {
     });
     return userLeaveCalendar;
   };
+
+  // const memGetUserLeaveCalendar = useMemo(() => {
+  //   (
+  //     calendar: {
+  //       date: string;
+  //       isOnLeave: boolean;
+  //       status: LeaveStatus;
+  //     }[],
+  //     userLeaves: { date: string; status: LeaveStatus; type: LeaveType }[]
+  //   ) => {
+  //     const userLeaveCalendar = calendar.map((calendarItem) => {
+  //       const includes = userLeaves.find(
+  //         (userLeave) => userLeave.date === calendarItem.date
+  //       );
+  //       if (includes) {
+  //         return {
+  //           date: calendarItem.date,
+  //           isOnLeave: true,
+  //           status: includes.status,
+  //           type: includes.type,
+  //         };
+  //       }
+  //       return calendarItem;
+  //     });
+  //     return userLeaveCalendar;
+  //   };
+  // }, [calendar]);
 
   useEffect(() => {
     const currentMonth = moment().month();

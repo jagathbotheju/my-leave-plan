@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import LeaveEditForm from "./LeaveEditForm";
 import { useState } from "react";
+import { LeaveType } from "@prisma/client";
 
 interface Props {
   data: LeaveHistoryColumnType;
@@ -28,33 +29,20 @@ interface Props {
 
 const LeaveHistoryActions = ({ data }: Props) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  let claimedLeaveBalance: z.infer<typeof LeaveBalanceSchema> | null = null;
-  const deletingLeaveType = Object.keys(data.leaveBalance).find(
-    (type) => type === data.leaveType.toLowerCase()
-  );
-
-  if (deletingLeaveType) {
-    const newLeaveTypeBal =
-      (data.leaveBalance[
-        deletingLeaveType as keyof typeof data.leaveBalance
-      ] as number) + data.days;
-    const deletingLeaveObj = {
-      [deletingLeaveType]: newLeaveTypeBal,
-    };
-    const newLeaveBalance = {
-      ...data.leaveBalance,
-      ...deletingLeaveObj,
-    };
-    claimedLeaveBalance = {
-      annual: newLeaveBalance.annual,
-      annualForward: newLeaveBalance.annualForward,
-      casual: newLeaveBalance.casual,
-      sick: newLeaveBalance.sick,
-      year: newLeaveBalance.year,
-    };
-  }
 
   const handleLeaveDelete = () => {
+    if (data.leaveType === LeaveType.ANNUAL) {
+      const claimingAnnual = data.leaveBalance.annual + data.days;
+      data.leaveBalance.annual = claimingAnnual > 45 ? 45 : data.days;
+      data.leaveBalance.annualForward =
+        claimingAnnual > 45 ? claimingAnnual - 45 : 0;
+    }
+    if (data.leaveType === LeaveType.CASUAL) {
+      data.leaveBalance.casual = data.leaveBalance.casual + data.days;
+    }
+
+    console.log("claimedLeaveBalance", data.leaveBalance);
+
     deleteLeave({
       leaveId: data.leaveId,
       userId: data.userId,
@@ -62,10 +50,10 @@ const LeaveHistoryActions = ({ data }: Props) => {
     })
       .then((resDel) => {
         if (resDel.success) {
-          if (claimedLeaveBalance) {
+          if (data.leaveBalance) {
             setLeaveBalance({
               userid: data.userId,
-              balance: claimedLeaveBalance,
+              balance: data.leaveBalance,
               isEditMode: true,
             }).then((res) => {
               if (res.success) {

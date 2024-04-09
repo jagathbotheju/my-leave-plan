@@ -92,11 +92,13 @@ const LeaveEditForm = ({
     const annualBalance = leaveBalance.annual + leaveBalance.annualForward;
     const casualBalance = leaveBalance.casual;
 
-    if (data.leaveType === "annual" && data.days > annualBalance) {
-      return toast.error("Annual Leave exceeds available balance");
+    console.log("dataDays/annualBalance", data.days, annualBalance);
+
+    if (data.leaveType === "annual" && annualBalance <= 0) {
+      return toast.error("Not enough Annual  balance");
     }
-    if (data.leaveType === "casual" && data.days > casualBalance) {
-      return toast.error("Casual Leave exceeds available balance");
+    if (data.leaveType === "casual" && casualBalance <= 0) {
+      return toast.error("No enough Casual balance");
     }
 
     let newBal = 0;
@@ -136,6 +138,8 @@ const LeaveEditForm = ({
       casual: newLeaveBalance.casual,
       sick: newLeaveBalance.sick,
     };
+
+    console.log("newLeaveBalance", newLeaveBalance);
 
     updateLeave({ userId, leaveId, newLeave: data })
       .then((response) => {

@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { UserExt } from "@/lib/types";
 import { setLeave, setLeaveBalance } from "@/actions/leaveActions";
+import { LeaveBalance } from "@prisma/client";
 
 interface Props {
   user: UserExt;
@@ -90,20 +91,32 @@ const LeaveRequestForm = ({ user }: Props) => {
       return toast.error("Casual Leave exceeds available balance");
     }
 
-    const newLeaveTypeBal =
-      (leaveBalance[data.leaveType as keyof typeof leaveBalance] as number) -
-      data.days;
-    const newBalObject = {
-      [data.leaveType]: newLeaveTypeBal,
+    // const newLeaveTypeBal =
+    //   (leaveBalance[data.leaveType as keyof typeof leaveBalance] as number) -
+    //   data.days;
+    // const newBalObject = {
+    //   [data.leaveType]: newLeaveTypeBal,
+    // };
+
+    if (data.leaveType === "annual") {
+      leaveBalance.annual =
+        leaveBalance.annual + leaveBalance.annualForward - data.days;
+      leaveBalance.annualForward = 0;
+    }
+    if (data.leaveType === "casual") {
+      leaveBalance.casual = leaveBalance.casual - data.days;
+    }
+
+    //const newLeaveBalance = { ...leaveBalance, ...newBalObject };
+    const newLeaveBalanceRequest = {
+      year: leaveBalance.year,
+      annual: leaveBalance.annual,
+      annualForward: leaveBalance.annualForward,
+      casual: leaveBalance.casual,
+      sick: leaveBalance.sick,
     };
-    const newLeaveBalance = { ...leaveBalance, ...newBalObject };
-    const newLeaveBalanceRequest: z.infer<typeof LeaveBalanceSchema> = {
-      year: newLeaveBalance.year,
-      annual: newLeaveBalance.annual,
-      annualForward: newLeaveBalance.annualForward,
-      casual: newLeaveBalance.casual,
-      sick: newLeaveBalance.sick,
-    };
+
+    console.log("newLeaveBalance", newLeaveBalanceRequest);
 
     setLeave({ userid: user.id, newLeave: data })
       .then((response) => {
@@ -238,6 +251,12 @@ const LeaveRequestForm = ({ user }: Props) => {
                       if (year !== selectedYear)
                         form.setValue("year", selectedYear);
                       field.onChange(value);
+                      if (
+                        form.getValues().startDate > form.getValues().endDate
+                      ) {
+                        form.setValue("endDate", form.getValues().startDate);
+                      }
+                      calculateDays();
                       setStartDateOpen(false);
                     }}
                     disabled={(date) => date < new Date()}
