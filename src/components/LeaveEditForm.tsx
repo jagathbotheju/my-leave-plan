@@ -92,8 +92,6 @@ const LeaveEditForm = ({
     const annualBalance = leaveBalance.annual + leaveBalance.annualForward;
     const casualBalance = leaveBalance.casual;
 
-    console.log("dataDays/annualBalance", data.days, annualBalance);
-
     if (data.leaveType === "annual" && annualBalance <= 0) {
       return toast.error("Not enough Annual  balance");
     }
@@ -138,8 +136,6 @@ const LeaveEditForm = ({
       casual: newLeaveBalance.casual,
       sick: newLeaveBalance.sick,
     };
-
-    console.log("newLeaveBalance", newLeaveBalance);
 
     updateLeave({ userId, leaveId, newLeave: data })
       .then((response) => {

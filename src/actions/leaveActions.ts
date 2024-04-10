@@ -5,7 +5,12 @@ import { z } from "zod";
 import { LeaveBalanceSchema, LeaveRequestSchema } from "@/lib/schema";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { comNewRequest, comUpdateRequest, sendMail } from "@/lib/mail";
+import {
+  comNewRequest,
+  comNewRequestApproved,
+  comUpdateRequest,
+  sendMail,
+} from "@/lib/mail";
 import moment from "moment";
 import { UserExt } from "@/lib/types";
 import { authOptions } from "@/lib/authOptions";
@@ -226,10 +231,18 @@ export const setLeaveStatus = async ({
   userId,
   leaveId,
   status,
+  name,
+  email,
+  startDate,
+  endDate,
 }: {
   userId: string;
   leaveId: string;
   status: string;
+  name?: string;
+  email?: string;
+  startDate?: Date;
+  endDate?: Date;
 }) => {
   try {
     const currentUser = await getCurrentUser();
@@ -261,6 +274,17 @@ export const setLeaveStatus = async ({
 
     if (updatedLeave) {
       revalidatePath(`/profile/${userId}`);
+      const body = comNewRequestApproved(
+        name as string,
+        moment(startDate).format("YYYY-MM-DD"),
+        moment(endDate).format("YYYY-MM-DD"),
+        status
+      );
+      await sendMail({
+        to: email!,
+        subject: "New Leave Status | My Leave Plan",
+        body,
+      });
       return {
         success: true,
         message: `Leave Status updated to ${status}`,
@@ -339,7 +363,6 @@ export const setLeaveBalance = async ({
       error: "Could not set leave balance, try later",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       error: "Internal Server Error",

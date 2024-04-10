@@ -7,8 +7,10 @@ import LeaveStatusManage from "./LeaveStatusManage";
 
 export type AdminHistoryColumnType = {
   id: string;
-  name: string;
   leaveId: string;
+  userId: string;
+  name: string;
+  userEmail: string;
   year: string;
   appliedOn: Date;
   startDate: Date;
@@ -16,7 +18,6 @@ export type AdminHistoryColumnType = {
   days: number;
   leaveType: string;
   leaveStatus: string;
-  userId: string;
   leaveBalance: LeaveBalance;
 };
 

@@ -15,9 +15,10 @@ import { useTransition } from "react";
 import { setLeaveStatus } from "@/actions/leaveActions";
 import { toast } from "sonner";
 import { UserExt } from "@/lib/types";
+import { AdminHistoryColumnType } from "./AdminHistoryColumns";
 
 interface Props {
-  rowData: LeaveHistoryColumnType;
+  rowData: AdminHistoryColumnType;
 }
 
 const LeaveStatusManage = ({ rowData }: Props) => {
@@ -35,6 +36,10 @@ const LeaveStatusManage = ({ rowData }: Props) => {
           leaveId: rowData.leaveId,
           userId: rowData.userId,
           status: value,
+          name: rowData.name,
+          email: rowData.userEmail,
+          startDate: rowData.startDate,
+          endDate: rowData.endDate,
         })
           .then((response) => {
             if (response.success) {

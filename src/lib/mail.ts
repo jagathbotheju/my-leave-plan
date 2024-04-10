@@ -6,6 +6,7 @@ import _ from "lodash";
 import { temNewRequest } from "./temNewRequest";
 import { temUpdateRequest } from "./temUpdateRequest";
 import { temDeleteRequest } from "./temDeleteRequest";
+import { temNewRequestApproved } from "./temNewRequestApproved";
 
 export const sendMail = async ({
   to,
@@ -83,6 +84,23 @@ export const comNewRequest = (name: string, from: string, to: string) => {
     name,
     from,
     to,
+  });
+
+  return htmlBody;
+};
+
+export const comNewRequestApproved = (
+  name: string,
+  from: string,
+  to: string,
+  leaveStatus: string
+) => {
+  const template = handlebars.compile(temNewRequestApproved);
+  const htmlBody = template({
+    name,
+    from,
+    to,
+    leaveStatus,
   });
 
   return htmlBody;

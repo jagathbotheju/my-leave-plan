@@ -41,8 +41,6 @@ const LeaveHistoryActions = ({ data }: Props) => {
       data.leaveBalance.casual = data.leaveBalance.casual + data.days;
     }
 
-    console.log("claimedLeaveBalance", data.leaveBalance);
-
     deleteLeave({
       leaveId: data.leaveId,
       userId: data.userId,

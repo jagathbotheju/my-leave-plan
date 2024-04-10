@@ -21,7 +21,7 @@ const DateChip = ({ leaveInfo }: Props) => {
     <div
       id={`${month + 1}-${date}`}
       className={cn(
-        `p-2 px-4 w-5 flex items-center justify-center h-10 text-xs text-slate-500 rounded-md border`,
+        `p-2 px-4 w-5 flex items-center justify-center h-10 text-xs text-slate-500 rounded-md border relative`,
         leaveInfo.isOnLeave && "text-slate-700 font-semibold",
         {
           // "bg-orange-300":
@@ -49,6 +49,10 @@ const DateChip = ({ leaveInfo }: Props) => {
         </p>
         <p>{date}</p>
       </div>
+
+      {leaveInfo.status === LeaveStatus.APPROVED && (
+        <div className="border-blue-400 border-2 w-auto h-auto absolute bottom-[2px] top-[2px] right-[2px] left-[2px] rounded-md"></div>
+      )}
     </div>
   );
 };

@@ -14,9 +14,16 @@ const Header = ({ title, className, user, showSummary = false }: Props) => {
   return (
     <div className={cn("w-full p-4 my-2", className)}>
       <div className="container mx-auto max-w-7xl flex items-center justify-between">
-        <h1 className=" font-bold text-4xl text-slate-700 dark:text-slate-50">
-          {title}
-        </h1>
+        <div className="flex flex-col">
+          <h1 className=" font-bold text-4xl text-slate-700 dark:text-slate-50">
+            {title}
+          </h1>
+          {title === "My Profile" && (
+            <p className="text-slate-500 font-semibold dark:text-slate-400">
+              {user?.email}
+            </p>
+          )}
+        </div>
 
         {user && showSummary && (
           <div className="flex gap-4">

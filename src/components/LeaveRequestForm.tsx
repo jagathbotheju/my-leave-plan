@@ -116,8 +116,6 @@ const LeaveRequestForm = ({ user }: Props) => {
       sick: leaveBalance.sick,
     };
 
-    console.log("newLeaveBalance", newLeaveBalanceRequest);
-
     setLeave({ userid: user.id, newLeave: data })
       .then((response) => {
         if (response.success) {

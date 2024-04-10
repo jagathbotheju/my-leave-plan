@@ -52,6 +52,7 @@ const AdminPage = async ({ params }: Props) => {
         leaveType: leave.leaveType,
         leaveStatus: leave.leaveStatus,
         userId: user.id,
+        userEmail: user.email ?? "",
         leaveBalance: user.leaveBalance,
       };
       adminHistoryData.push(data);

@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <div className="flex w-full shadow-lg h-20 dark:bg-slate-700">
       <div className="flex items-center justify-between container max-w-6xl w-full p-5">
-        <Link href="/" className="text-3xl font-semibold">
+        <Link href="/" className="text-4xl font-bold">
           My Leave Plan
         </Link>
         <div className="flex items-center gap-4">

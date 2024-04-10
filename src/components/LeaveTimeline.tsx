@@ -93,32 +93,25 @@ const LeaveTimeLine = ({ users }: Props) => {
     return userLeaveCalendar;
   };
 
-  // const memGetUserLeaveCalendar = useMemo(() => {
-  //   (
-  //     calendar: {
-  //       date: string;
-  //       isOnLeave: boolean;
-  //       status: LeaveStatus;
-  //     }[],
-  //     userLeaves: { date: string; status: LeaveStatus; type: LeaveType }[]
-  //   ) => {
-  //     const userLeaveCalendar = calendar.map((calendarItem) => {
-  //       const includes = userLeaves.find(
-  //         (userLeave) => userLeave.date === calendarItem.date
-  //       );
-  //       if (includes) {
-  //         return {
-  //           date: calendarItem.date,
-  //           isOnLeave: true,
-  //           status: includes.status,
-  //           type: includes.type,
-  //         };
-  //       }
-  //       return calendarItem;
-  //     });
-  //     return userLeaveCalendar;
-  //   };
-  // }, [calendar]);
+  const usersLeaveCalendarRows = users.map((user, index) => {
+    const userLeaves = getUserLeaves(user);
+    const userLeaveCalendar = getUserLeaveCalendar(newCal(), userLeaves);
+
+    const row = userLeaveCalendar.map((leaveInfo) => (
+      <DateChip key={leaveInfo.date} leaveInfo={leaveInfo} />
+    ));
+
+    return (
+      <div key={index} className="flex gap-1">
+        {row}
+      </div>
+    );
+  });
+
+  const memUsersLeaveCalendarRows = useMemo(
+    () => usersLeaveCalendarRows,
+    [usersLeaveCalendarRows]
+  );
 
   useEffect(() => {
     const currentMonth = moment().month();
@@ -165,7 +158,7 @@ const LeaveTimeLine = ({ users }: Props) => {
 
             {/* user leaves */}
             <div className="flex flex-col gap-4">
-              {users.map((user, index) => {
+              {/* {users.map((user, index) => {
                 const userLeaves = getUserLeaves(user);
                 const userLeaveCalendar = getUserLeaveCalendar(
                   newCal(),
@@ -181,7 +174,8 @@ const LeaveTimeLine = ({ users }: Props) => {
                     {row}
                   </div>
                 );
-              })}
+              })} */}
+              {...memUsersLeaveCalendarRows}
             </div>
           </div>
         </div>
