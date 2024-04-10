@@ -71,7 +71,11 @@ const ResetPasswordForm = ({ id }: Props) => {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="flex relative">
-                  <Input {...field} type={showPass ? "text" : "password"} />
+                  <Input
+                    {...field}
+                    type={showPass ? "text" : "password"}
+                    className="dark:bg-slate-600"
+                  />
                   <span
                     className="absolute top-3 right-2 cursor-pointer"
                     onClick={() => setShowPass(!showPass)}
@@ -99,7 +103,11 @@ const ResetPasswordForm = ({ id }: Props) => {
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <div className="flex relative">
-                  <Input {...field} type={showPass ? "text" : "password"} />
+                  <Input
+                    {...field}
+                    type={showPass ? "text" : "password"}
+                    className="dark:bg-slate-600"
+                  />
                   <span
                     className="absolute top-3 right-2 cursor-pointer"
                     onClick={() => setShowPass(!showPass)}

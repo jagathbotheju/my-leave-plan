@@ -71,7 +71,7 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="dark:bg-slate-600" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,6 +91,7 @@ const RegisterForm = () => {
                   {...field}
                   placeholder="your.email@example.com"
                   type="email"
+                  className="dark:bg-slate-600"
                 />
               </FormControl>
               <FormMessage />
@@ -108,7 +109,11 @@ const RegisterForm = () => {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="flex relative">
-                  <Input {...field} type={showPass ? "text" : "password"} />
+                  <Input
+                    {...field}
+                    type={showPass ? "text" : "password"}
+                    className="dark:bg-slate-600"
+                  />
                   <span
                     className="absolute top-3 right-2 cursor-pointer"
                     onClick={() => setShowPass(!showPass)}
@@ -136,7 +141,11 @@ const RegisterForm = () => {
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <div className="flex relative">
-                  <Input {...field} type={showPass ? "text" : "password"} />
+                  <Input
+                    {...field}
+                    type={showPass ? "text" : "password"}
+                    className="dark:bg-slate-600"
+                  />
                   <span
                     className="absolute top-3 right-2 cursor-pointer"
                     onClick={() => setShowPass(!showPass)}

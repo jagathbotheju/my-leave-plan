@@ -137,7 +137,7 @@ const LeaveTimeLine = ({ users }: Props) => {
             return (
               <p
                 key={user.id}
-                className="p-2 h-10 text-end font-semibold rounded-md bg-slate-200 text-slate-800 text-sm whitespace-nowrap text-ellipsis overflow-hidden"
+                className="p-2 h-10 text-end font-semibold rounded-md bg-slate-200 dark:text-slate-100 dark:bg-slate-500 text-sm whitespace-nowrap text-ellipsis overflow-hidden"
               >
                 {formatUserName[0]}
               </p>

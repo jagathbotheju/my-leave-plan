@@ -77,6 +77,7 @@ const LoginForm = ({ callbackUrl }: Props) => {
                   {...field}
                   placeholder="your.email@example.com"
                   type="email"
+                  className="dark:bg-slate-600"
                 />
               </FormControl>
               <FormMessage />
@@ -93,7 +94,11 @@ const LoginForm = ({ callbackUrl }: Props) => {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="flex relative">
-                  <Input {...field} type={showPass ? "text" : "password"} />
+                  <Input
+                    {...field}
+                    type={showPass ? "text" : "password"}
+                    className="dark:bg-slate-600"
+                  />
                   <span
                     className="absolute top-3 right-2 cursor-pointer"
                     onClick={() => setShowPass(!showPass)}

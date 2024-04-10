@@ -1,7 +1,7 @@
 "use client";
 import { UserExt } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 interface Props {
   title: string;
@@ -11,11 +11,18 @@ interface Props {
 }
 
 const Header = ({ title, className, user, showSummary = false }: Props) => {
+  const pathname = usePathname();
+
   return (
     <div className={cn("w-full p-4 my-2", className)}>
       <div className="container mx-auto max-w-7xl flex items-center justify-between">
         <div className="flex flex-col">
-          <h1 className=" font-bold text-4xl text-slate-700 dark:text-slate-50">
+          <h1
+            className={cn(
+              "font-bold text-4xl text-slate-700 dark:text-slate-50",
+              pathname === "/admin" && "text-primary"
+            )}
+          >
             {title}
           </h1>
           {title === "My Profile" && (

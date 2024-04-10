@@ -74,6 +74,7 @@ const ForgotPasswordPage = () => {
                         {...field}
                         placeholder="your.email@example.com"
                         type="email"
+                        className="dark:bg-slate-600"
                       />
                     </FormControl>
                     <FormMessage />

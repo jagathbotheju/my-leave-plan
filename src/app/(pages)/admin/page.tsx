@@ -22,13 +22,10 @@ interface Props {
 }
 
 const AdminPage = async ({ params }: Props) => {
-  //const response = await getUserById(params.id);
-  //const user = response.user as UserExt;
   const session = await getServerSession(authOptions);
   const currentUser = session?.user as UserExt;
 
   if (!session || !session.user) redirect("/login");
-  // if (currentUser.id !== user.id) redirect("/");
   if (currentUser.role !== "ADMIN") {
     return redirect("/auth/not-authorized");
   }
@@ -57,12 +54,11 @@ const AdminPage = async ({ params }: Props) => {
       };
       adminHistoryData.push(data);
     });
-    // return history;
   });
 
   return (
     <div className="flex w-full flex-col">
-      <Header title="ADMIN AREA" className="bg-red-100" />
+      <Header title="ADMIN AREA" />
 
       <div className="flex flex-col container mx-auto max-w-7xl  mt-8">
         <Tabs defaultValue="history">
