@@ -60,7 +60,9 @@ const LeaveRequestForm = ({ user }: Props) => {
     //check leave exist
     const requestStartDate = moment(data.startDate);
     const requestEndDate = moment(data.endDate);
-    user.leave.map((item) => {
+
+    //check if leave already applied for given period
+    const leaveExist = user.leave.map((item) => {
       const leaveStartDate = moment(item.startDate);
       const leaveEndDate = moment(item.endDate);
       if (
@@ -72,11 +74,13 @@ const LeaveRequestForm = ({ user }: Props) => {
         ) ||
         requestEndDate.isBetween(leaveStartDate, leaveEndDate, "date", "[]")
       ) {
-        return toast.error(
-          "Overlapping with existing leave dates, please check"
-        );
+        return true;
       }
+      return false;
     });
+    if (leaveExist[0]) {
+      return toast.error("Overlapping with existing leave dates, please check");
+    }
 
     // adjusting leave balance
     const annualBalance =

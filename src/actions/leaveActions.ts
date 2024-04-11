@@ -332,6 +332,7 @@ export const setLeaveBalance = async ({
           year: balance.year,
           annual: balance.annual,
           annualForward: balance.annualForward,
+          casual: balance.casual,
           sick: balance.sick,
         },
       });
